@@ -150,7 +150,7 @@ details {
 	line-height: 1.4rem;
 	text-align: center;
 	vertical-align: baseline;
-	font-size: min(1.6rem, calc(96vw / 18));
+	font-size: 1.2rem;
 }
 
 #info {
