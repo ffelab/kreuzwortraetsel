@@ -179,6 +179,10 @@ details {
 		}
 	}
 }
+a {
+	text-decoration: underline;
+	z-index: 200;
+}
 .hidden {
 	display: none;
 }
