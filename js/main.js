@@ -433,7 +433,11 @@ letterBtns.forEach((btn) => {
 
 backspaceBtn.addEventListener("click", handleBackspace);
 
-toggleBtn.addEventListener("click", openInfo);
+toggleBtn.addEventListener("click", () => {
+	state.current = { row: null, col: null };
+	clearHighlight();
+	openInfo();
+});
 const infoButtons = info.querySelectorAll(".close-button");
 infoButtons.forEach((btn) => {
 	btn.addEventListener("click", closeInfo);
@@ -540,3 +544,4 @@ function setMotionListeners() {
 
 buildGrid();
 loadPuzzle();
+console.log(state.current.row);
