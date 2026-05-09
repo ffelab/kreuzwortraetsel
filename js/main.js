@@ -2,6 +2,8 @@
 
 const { PUZZLE_ID, SIZE, BLACK_FIELDS, NUMBER_FIELDS, CLUES } = puzzleData;
 
+let schummelzaehler = 0;
+
 /* ===================== STATE ===================== */
 
 const state = {
@@ -454,6 +456,9 @@ async function checkMotionPermission() {
 			console.log("Permission error:", e);
 		}
 	} else {
+		btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
+		btn_reqPermission.style.textDecoration = "none";
+		closeInfo();
 		setMotionListeners();
 	}
 }
@@ -474,7 +479,7 @@ function setMotionListeners() {
 		console.log("MAX:", max);
 
 		if (max > 10) {
-			schummelzähler++;
+			schummelzaehler++;
 			setTimeout(() => {
 				output.innerHTML = "";
 			}, 2000);
