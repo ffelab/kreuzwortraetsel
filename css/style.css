@@ -29,7 +29,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
-	height: 96dvh;
+	height: 100dvh;
 
 	font-family: "JetBrainsMono";
 	background-color: var(--primary-bg-color);
@@ -103,7 +103,7 @@ details {
 
 .buchstaben-container {
 	margin: 0 1vw;
-	width: 96vw;
+	width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	flex-wrap: wrap;
@@ -119,6 +119,8 @@ details {
 }
 
 .keyboard-wrapper {
+	width: 100dvw;
+	margin: 0 2dvw 2dvw 2dvw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
