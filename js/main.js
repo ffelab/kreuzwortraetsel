@@ -486,6 +486,7 @@ async function checkMotionPermission() {
 
 function setMotionListeners() {
 	window.addEventListener("devicemotion", (event) => {
+		btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
 		console.log("MOTION FIRED");
 
 		const acc = event.acceleration;
@@ -502,7 +503,6 @@ function setMotionListeners() {
 		if (max > 10) {
 			schummelzaehler++;
 			display.textContent = "Schummeln aktiviert!";
-			btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
 			savePuzzle();
 		}
 	});
