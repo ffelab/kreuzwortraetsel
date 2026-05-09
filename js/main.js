@@ -480,9 +480,6 @@ function setMotionListeners() {
 
 		if (max > 10) {
 			schummelzaehler++;
-			setTimeout(() => {
-				output.innerHTML = "";
-			}, 2000);
 		}
 	});
 }
