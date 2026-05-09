@@ -180,7 +180,8 @@ details {
 	}
 }
 #btn_reqPermission {
-	font-size: 1rem;
+	margin-top: 2vw;
+	font-size: 1rem !important;
 	text-decoration: underline dotted;
 	z-index: 200;
 }
