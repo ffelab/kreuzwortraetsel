@@ -502,10 +502,6 @@ function setMotionListeners() {
 	const COOLDOWN = 1000;
 
 	window.addEventListener("devicemotion", (event) => {
-		if (state.current.row === null) {
-			alert("Wähle ein Feld aus bevor du schüttelst!");
-			return;
-		}
 		const acc = event.acceleration;
 		if (!acc) return;
 
@@ -523,6 +519,10 @@ function setMotionListeners() {
 			max > SHAKE_THRESHOLD &&
 			now - lastShakeTime > COOLDOWN
 		) {
+			if (state.current.row === null) {
+				alert("Wähle ein Feld aus bevor du schüttelst!");
+				return;
+			}
 			isShaking = true;
 			lastShakeTime = now;
 
