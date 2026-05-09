@@ -96,9 +96,21 @@ body {
 button,
 details {
 	font-family: "JetBrainsMono";
-	background-color: var(--lighter-bg-color);
+
 	border: none;
 	color: var(--darker-text-color);
+}
+
+button.letter-button,
+.backspace-button,
+.switch-button,
+.close-button,
+details {
+	background-color: var(--lighter-bg-color);
+}
+
+button#empty {
+	background-color: var(--lighter-bg-color);
 }
 
 .buchstaben-container {
@@ -113,7 +125,7 @@ details {
 		font-size: calc(96vw / 18);
 	}
 	& > button.backspace-button {
-		width: calc((85vw / 11) * 3 + 4vw);
+		width: calc((85vw / 11) * 2 + 2vw);
 	}
 }
 
