@@ -108,6 +108,8 @@ details {
 }
 
 .keyboard-wrapper {
+	position: fixed;
+	bottom: 4vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
