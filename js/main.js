@@ -502,6 +502,7 @@ function setMotionListeners() {
 		if (max > 10) {
 			schummelzaehler++;
 			display.textContent = "Schummeln aktiviert!";
+			btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
 			savePuzzle();
 		}
 	});
