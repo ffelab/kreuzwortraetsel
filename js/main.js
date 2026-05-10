@@ -497,7 +497,7 @@ function setMotionListeners() {
 	let isShaking = false;
 	let lastShakeTime = 0;
 
-	const SHAKE_THRESHOLD = 111;
+	const SHAKE_THRESHOLD = 65;
 	const RESET_THRESHOLD = 2;
 	const COOLDOWN = 1000;
 
