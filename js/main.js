@@ -21,6 +21,7 @@ const display = document.getElementById("hinweis");
 const letterBtns = document.querySelectorAll(".letter-button");
 const backspaceBtn = document.querySelector(".backspace-button");
 const info = document.getElementById("info");
+const checkButton = document.getElementById("cmd");
 
 /* ===================== GRID ===================== */
 
@@ -338,6 +339,7 @@ function checkSolution() {
 				grid[r][c].letterEl.style.color = "black";
 				const letter = solution[i];
 
+				console.log(grid[r][c].letter);
 				// grid[r][c].letter = letter;
 				if (grid[r][c].letterEl.textContent !== letter) {
 					if (grid[r][c].letterEl.textContent !== "") {
@@ -350,8 +352,6 @@ function checkSolution() {
 			}
 		}
 	}
-
-	savePuzzle();
 }
 
 /* ===================== SWIPE ===================== */
@@ -527,6 +527,7 @@ function setMotionListeners() {
 			lastShakeTime = now;
 
 			schummelzaehler++;
+			fillRandomField();
 			btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
 			display.textContent = "Schummeln aktiviert!";
 
@@ -563,3 +564,82 @@ document.addEventListener("touchend", () => {
 		location.reload();
 	}
 });
+
+function fillRandomField() {
+	let { row, col } = state.current;
+	const freeFields = [];
+
+	let startRow = row;
+	let startCol = col;
+
+	if (state.direction === "horizontal") {
+		while (startCol > 0 && !isBlack(row, startCol - 1)) {
+			startCol--;
+		}
+	} else {
+		while (startRow > 0 && !isBlack(startRow - 1, col)) {
+			startRow--;
+		}
+	}
+
+	const numEl = grid[startRow][startCol].el.querySelector(".question-number");
+
+	const clueNumber = numEl.textContent;
+	const clueSet =
+		state.direction === "horizontal"
+			? CLUES["WAAGERECHT"]
+			: CLUES["SENKRECHT"];
+
+	const solution = clueSet[clueNumber]?.s;
+
+	let index = 0;
+
+	if (state.direction === "horizontal") {
+		for (let c = startCol; c < SIZE; c++) {
+			if (isBlack(row, c)) break;
+
+			const correctLetter = solution[index];
+			const currentLetter = grid[row][c].letter;
+
+			if (currentLetter !== correctLetter) {
+				freeFields.push({
+					row: row,
+					col: c,
+					correctLetter: correctLetter,
+				});
+			}
+
+			index++;
+		}
+	} else {
+		for (let r = startRow; r < SIZE; r++) {
+			if (isBlack(r, col)) break;
+
+			const correctLetter = solution[index];
+			const currentLetter = grid[r][col].letter;
+
+			if (currentLetter !== correctLetter) {
+				freeFields.push({
+					row: r,
+					col: col,
+					correctLetter: correctLetter,
+				});
+			}
+
+			index++;
+		}
+	}
+
+	if (freeFields.length === 0) {
+		return;
+	}
+
+	const randomIndex = Math.floor(Math.random() * freeFields.length);
+	const chosen = freeFields[randomIndex];
+
+	const { row: r, col: c, correctLetter } = chosen;
+
+	const cell = grid[r][c];
+	cell.letter = correctLetter;
+	cell.letterEl.textContent = correctLetter;
+}

@@ -109,7 +109,7 @@ details {
 	background-color: var(--lighter-bg-color);
 }
 
-button#empty {
+button.empty {
 	background-color: var(--lighter-bg-color);
 }
 
