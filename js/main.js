@@ -423,7 +423,7 @@ containerEl.addEventListener("click", (e) => {
 	const c = Number(cellEl.dataset.col);
 	const clickedSameCell = state.current.row === r && state.current.col === c;
 
-	display.style.color = "white";
+	display.style.color = "black";
 
 	if (clickedSameCell) toggleDirection();
 	else setActive(r, c);
