@@ -58,7 +58,7 @@ function buildGrid() {
 }
 
 function isBlack(r, c) {
-	if (state.current.row === null) return;
+	if (state.current.row === null) return false;
 	return grid[r][c].el.classList.contains("black");
 }
 
@@ -303,7 +303,7 @@ function getCurrentClue() {
 	let clue = getWordStart(state.direction);
 
 	if (!clue) {
-		// toggleDirection();    //UN-UNCOMMENT AFTER EDITING!!!!
+		toggleDirection(); //UN-UNCOMMENT AFTER EDITING!!!!
 		clue = getWordStart(state.direction);
 	}
 
