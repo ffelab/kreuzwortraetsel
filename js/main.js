@@ -134,8 +134,10 @@ function highlightWord(r, c) {
 }
 
 function setActive(r, c) {
+	if (isBlack(r, c)) {
+		return;
+	}
 	clearHighlight();
-	if (isBlack(r, c)) return;
 
 	state.current = { row: r, col: c };
 	grid[r][c].el.classList.add("active");
@@ -173,7 +175,7 @@ function moveNext() {
 		clearHighlight();
 		state.current = { row: null, col: null };
 		display.textContent = "Wähle das nächste Feld aus";
-		display.style.color = "grey";
+		display.style.color = "var(--between-dark-light)";
 	}
 }
 
@@ -322,7 +324,7 @@ function showClue() {
 	if (index !== -1) state.currentClueIndex = index;
 
 	renderClue(state.currentClueIndex);
-	display.style.color = "black";
+	display.style.color = "var(--primary-text-color)";
 }
 
 function renderClue(index) {
@@ -356,6 +358,10 @@ function openInfo() {
 	body.classList.add("dark");
 }
 function closeInfo() {
+	clearHighlight();
+	state.current = { row: null, col: null };
+	display.textContent = "Wähle das nächste Feld aus";
+	display.style.color = "var(--between-dark-light)";
 	info.classList.add("hidden");
 	info.classList.remove("flex");
 	body.classList.remove("dark");
@@ -415,7 +421,6 @@ function checkSolution() {
 const swipe = { startX: 0, currentX: 0, active: false };
 
 display.addEventListener("touchstart", (e) => {
-	display.style.color = "black";
 	swipe.active = true;
 	swipe.startX = swipe.currentX = e.touches[0].clientX;
 	display.style.transition = "none";
@@ -475,7 +480,7 @@ containerEl.addEventListener("click", (e) => {
 	const c = Number(cellEl.dataset.col);
 	const clickedSameCell = state.current.row === r && state.current.col === c;
 
-	display.style.color = "black";
+	display.style.color = "var(--primary-text-color)";
 
 	if (clickedSameCell) toggleDirection();
 	else setActive(r, c);

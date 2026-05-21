@@ -54,7 +54,7 @@ body {
 }
 
 body.dark {
-	background-color: var(--primary-text-color);
+	background-color: black;
 }
 
 #rätsel-container {

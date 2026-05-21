@@ -19,9 +19,14 @@
 	--secondary-bg-color: rgb(201, 205, 240);
 	--lighter-bg-color: rgb(220, 220, 220);
 	--between-dark-light: rgb(147, 147, 147);
-	--primary-highlight-color: #7984ff;
+
+	--primary-highlight-color: #606efd;
 	--secondary-highlight-color: #d1d9ff;
+	/* --primary-highlight-color: #ff4c31;
+	--secondary-highlight-color: #ffe1dc; */
+
 	--primary-text-color: rgb(0, 2, 37);
+	/* --primary-text-color: rgb(44, 14, 176); */
 	--darker-text-color: rgb(10, 20, 45);
 }
 
@@ -39,11 +44,11 @@ body {
 	justify-content: space-between;
 	height: 100dvh;
 	font-family: "JetBrainsMono";
-	/* background-color: var(--secondary-bg-color); */
+	/* background-color: var(--primary-text-color); */
 }
 
 body.dark {
-	background-color: var(--primary-text-color);
+	background-color: black;
 }
 
 #rätsel-container {
@@ -119,7 +124,7 @@ button,
 details {
 	background-color: var(--primary-text-color);
 	/* border: 2.7px solid var(--primary-bg-color); */
-
+	border-radius: 2px;
 	color: var(--primary-bg-color);
 	font-weight: bold;
 }
@@ -173,7 +178,6 @@ details {
 }
 
 #hinweis-container {
-	color: var(--primary-text-color);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -185,7 +189,7 @@ details {
 
 #hinweis {
 	font-family: Arial, Helvetica, sans-serif;
-	font-weight: 700;
+	font-weight: 900;
 	width: min(calc(40px * 11), 94vw);
 	margin: 0 3vw;
 	line-height: 1.4rem;
