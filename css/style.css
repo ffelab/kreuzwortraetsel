@@ -15,17 +15,18 @@
 
 :root {
 	--body-bg: linear-gradient(rgb(255, 255, 255), rgb(36, 36, 36));
-	--primary-bg-color: rgb(255, 255, 255);
+	/* --primary-bg-color: rgb(255, 255, 255); */
+	--primary-bg-color: #ededed;
 	--secondary-bg-color: rgb(201, 205, 240);
 	--lighter-bg-color: rgb(220, 220, 220);
 	--between-dark-light: rgb(147, 147, 147);
 
-	--primary-highlight-color: #606efd;
-	--secondary-highlight-color: #d1d9ff;
+	--primary-highlight-color: #676cfd;
+	--secondary-highlight-color: #c6cdff;
 	/* --primary-highlight-color: #ff4c31;
 	--secondary-highlight-color: #ffe1dc; */
 
-	--primary-text-color: rgb(0, 2, 37);
+	--primary-text-color: rgb(23, 23, 23);
 	/* --primary-text-color: rgb(44, 14, 176); */
 	--darker-text-color: rgb(10, 20, 45);
 }
@@ -44,7 +45,7 @@ body {
 	justify-content: space-between;
 	height: 100dvh;
 	font-family: "JetBrainsMono";
-	/* background-color: var(--primary-text-color); */
+	background-color: var(--primary-bg-color);
 }
 
 body.dark {
@@ -53,11 +54,14 @@ body.dark {
 
 #rätsel-container {
 	border: solid var(--primary-text-color) 1.8px;
+	border-radius: 2px;
 	margin-top: 3vw;
 	display: grid;
 	grid-template-columns: repeat(10, min(60px, calc(94vw / 10)));
 
-	background: var(--primary-bg-color);
+	background: var(--primary-text-color);
+	/* background-image: url(../img/bg-paper-gross.webp);
+	background-size: 130%; */
 	/* box-shadow: 0px 23dvh 80px 70px var(--primary-bg-color); */
 }
 
@@ -66,12 +70,10 @@ body.dark {
 	position: relative;
 	aspect-ratio: 1 / 1;
 	max-width: 60px;
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	border: 1.8px solid var(--primary-text-color);
-
 	font-size: min(1.6rem, calc(94vw / 16));
 	font-weight: 600;
 	cursor: pointer;
@@ -81,8 +83,11 @@ body.dark {
 
 .box.black {
 	box-sizing: content-box;
-	background: var(--primary-text-color);
+	/* background: var(--primary-text-color); */
+	background-color: transparent;
 	cursor: default;
+	border: none;
+	pointer-events: none;
 }
 .word {
 	background: var(--secondary-highlight-color);
@@ -90,7 +95,7 @@ body.dark {
 
 .box.active {
 	background: var(--primary-highlight-color);
-	color: var(--primary-bg-color);
+	color: white;
 }
 
 .box.active::after {
@@ -98,7 +103,7 @@ body.dark {
 	position: absolute;
 	width: 2.2px;
 	height: 55%;
-	background: var(--primary-bg-color);
+	background: white;
 	border: none;
 	left: 22%;
 	top: 20%;
@@ -123,40 +128,40 @@ details {
 button,
 details {
 	background-color: var(--primary-text-color);
-	/* border: 2.7px solid var(--primary-bg-color); */
+	border: 3px solid var(--primary-text-color);
 	border-radius: 2px;
 	color: var(--primary-bg-color);
 	font-weight: bold;
 }
 #info > button,
 details {
-	border: solid 2.7px var(--darker-text-color);
+	border: solid 2.7px var(--primary-bg-color);
 }
 
 .buchstaben-container {
 	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	flex-wrap: wrap;
-	gap: 2vw;
+	/* gap: 1.5vw; */
 	& > button {
-		width: calc(85vw / 11);
-		height: calc(85vw / 6);
-		font-size: calc(96vw / 18);
+		width: calc(84vw / 11);
+		height: calc(84vw / 6);
+		font-size: calc(95vw / 18);
 	}
 	& > button.backspace-button {
-		width: calc((85vw / 11) * 2 + 2vw);
+		width: calc((84vw / 11) * 2 + 1.5vw);
 	}
 }
 
 .keyboard-wrapper {
 	margin-bottom: 2vw;
-	width: 100dvw;
-	margin: 0 4dvw 0 4dvw;
+	width: 95dvw;
+	/* margin: 0 5dvw 0 5dvw; */
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	gap: 2vw;
+	justify-content: space-between;
+	gap: 1.5dvw;
 }
 
 #hinweis-liste {
@@ -172,9 +177,10 @@ details {
 	top: 0.04rem;
 	left: 0.1rem;
 	font-size: min(1rem, calc(96vw / 37));
-	font-weight: bold;
+	font-weight: 900;
 	pointer-events: none;
 	user-select: none;
+	color: var(--primary-text-color);
 }
 
 #hinweis-container {
@@ -183,17 +189,22 @@ details {
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
-	margin-bottom: 1.5vw;
+	margin-bottom: 2vw;
+	margin-top: 2vw;
+	padding: 1vw;
 	height: 100%;
+	width: 95vw;
+	border: 3px solid var(--primary-text-color);
+	border-radius: 2px;
 }
 
 #hinweis {
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: 900;
+	font-family: "JetBrainsMono";
+	font-weight: 700;
 	width: min(calc(40px * 11), 94vw);
-	margin: 0 3vw;
 	line-height: 1.4rem;
 	text-align: center;
+	width: 95%;
 	vertical-align: baseline;
 	font-size: 1.1rem;
 	color: var(--between-dark-light);
@@ -255,7 +266,7 @@ details > p {
 @media (min-width: 470px) {
 	#rätsel-container {
 		border: solid var(--primary-text-color) 2px;
-		margin-top: 0;
+		margin-top: 3vw;
 	}
 	.box {
 		border: solid var(--primary-text-color) 2px;

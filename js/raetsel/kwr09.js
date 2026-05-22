@@ -88,7 +88,7 @@ const puzzleData = {
 		SENKRECHT: {
 			1: { c: "Gar nicht mal so selten", l: "3", s: "OFT" },
 			2: {
-				c: "Kommandeur*in und Informatiker*in sind sich einig: Dem ... folgt unweigerlich die prompte Ausführung",
+				c: "Kommandeur*in und Informati-ker*in sind sich einig: Dem ... folgt unweigerlich die prompte Ausführung",
 				l: "6",
 				s: "BEFEHL",
 			},
