@@ -240,7 +240,7 @@ function triggerWinAnimation() {
 			const delay = dist * 70;
 
 			var audio = new Audio(
-				"../img/freesound_community-winsquare-6993.mp3",
+				"../kreuzwortraetsel/img/freesound_community-winsquare-6993.mp3",
 			);
 
 			setTimeout(() => {
