@@ -210,9 +210,7 @@ function getRandomColor() {
 
 	return colors[Math.floor(Math.random() * colors.length)];
 }
-var audio = new Audio(
-	"../kreuzwortraetsel/img/freesound_community-winsquare-6993.mp3",
-);
+var audio = new Audio("./img/freesound_community-winsquare-6993.mp3");
 function unlockAudio() {
 	audio.play().then(() => {
 		audio.pause();
