@@ -213,6 +213,19 @@ function getRandomColor() {
 var audio = new Audio(
 	"../kreuzwortraetsel/img/freesound_community-winsquare-6993.mp3",
 );
+function unlockAudio() {
+	audio.play().then(() => {
+		audio.pause();
+		audio.currentTime = 0;
+	});
+
+	document.removeEventListener("touchstart", unlockAudio);
+	document.removeEventListener("click", unlockAudio);
+}
+
+document.addEventListener("touchstart", unlockAudio);
+document.addEventListener("click", unlockAudio);
+
 function triggerWinAnimation() {
 	console.log("PUZZLE SOLVED!");
 	clearHighlight();
