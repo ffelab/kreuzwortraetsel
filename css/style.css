@@ -42,7 +42,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 	height: 100dvh;
 	font-family: "JetBrainsMono";
 	background-color: var(--primary-bg-color);
@@ -71,7 +71,7 @@ body.dark {
 #rätsel-container {
 	border: solid var(--primary-text-color) 1.8px;
 	border-radius: 2px;
-	margin-top: 2dvh;
+	margin-top: 1dvh;
 	display: grid;
 	grid-template-columns: repeat(10, min(60px, calc(94vw / 10)));
 
@@ -171,7 +171,7 @@ details {
 }
 
 .keyboard-wrapper {
-	margin-bottom: 2dvh;
+	margin-bottom: 1dvh;
 	width: 95dvw;
 	/* margin: 0 5dvw 0 5dvw; */
 	display: flex;
@@ -203,6 +203,7 @@ details {
 
 	min-height: calc(3.7dvh * 4);
 	height: 100%;
+	max-height: calc(3.7dvh * 6);
 	width: 95vw;
 	border: 3px solid var(--primary-text-color);
 	background: var(--primary-bg-color);
