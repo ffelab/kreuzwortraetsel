@@ -59,12 +59,12 @@ const puzzleData = {
 	CLUES: {
 		WAAGERECHT: {
 			2: {
-				c: "",
+				c: "Im Match nur Set-Etappe",
 				l: "4",
-				s: "GUDE",
+				s: "GAME",
 			},
 			5: {
-				c: "",
+				c: "Beim Gebäck stehts für doppelt, beim Licht für halb",
 				l: "4",
 				s: "ZWIE",
 			},
@@ -94,12 +94,12 @@ const puzzleData = {
 				s: "ABOBEN",
 			},
 			15: {
-				c: "",
+				c: "Synonyme de marron",
 				l: "4",
 				s: "BRUN",
 			},
 			17: {
-				c: "",
+				c: "Berberitze Spitzname: Hat alles was der Neidspross hat",
 				l: "10",
 				s: "SPIESSDORN",
 			},
@@ -136,27 +136,27 @@ const puzzleData = {
 				s: "ENTZUENDET",
 			},
 			4: {
-				c: "",
+				c: "Passt zum Walzer, Markt und Biss",
 				l: "4",
 				s: "FLOH",
 			},
 			5: {
-				c: "",
-				l: "8",
+				c: "12 Zoll mit dem Körper gemessen",
+				l: "4,4",
 				s: "ZWEIFUSS",
 			},
 			7: {
-				c: "",
+				c: "Ein verliebter Robert Smith lieferte den 20 waagerecht dazu",
 				l: "8",
 				s: "LOVESONG",
 			},
 			9: {
-				c: "",
+				c: "Die klingen höchstens im opera house",
 				l: "6",
 				s: "TENORS",
 			},
 			10: {
-				c: "",
+				c: "Überflieger im Überfliegen",
 				l: "6",
 				s: "AIRBUS",
 			},

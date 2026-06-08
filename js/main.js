@@ -1,3 +1,53 @@
+const cacheKey = "userLocationData";
+const cacheDuration = 1000 * 60 * 60 * 24;
+
+function getCachedCity() {
+	const cached = localStorage.getItem(cacheKey);
+	if (!cached) return null;
+
+	const parsed = JSON.parse(cached);
+
+	if (Date.now() - parsed.timestamp > cacheDuration) {
+		localStorage.removeItem(cacheKey);
+		return null;
+	}
+
+	return parsed.data;
+}
+
+function setCachedCity(data) {
+	localStorage.setItem(
+		cacheKey,
+		JSON.stringify({
+			data,
+			timestamp: Date.now(),
+		}),
+	);
+}
+
+async function getCity() {
+	const cached = getCachedCity();
+
+	if (cached) {
+		console.log("From cache:", cached.city);
+		return cached;
+	}
+
+	const res = await fetch(
+		"https://api.ipdata.co?api-key=2b4cb62ac6f29b072111dd7abcdef8c0f3cac6a88b2c9f3fb6519fd8",
+	);
+
+	const data = await res.json();
+
+	setCachedCity(data);
+
+	console.log("From API:", data.city);
+
+	return data;
+}
+
+getCity();
+
 /* ===================== CONFIG & CONSTANTS ===================== */
 
 const { PUZZLE_ID, SIZE, MIN_WORD_LENGTH, BLACK_FIELDS, NUMBER_FIELDS, CLUES } =
