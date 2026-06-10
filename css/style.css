@@ -333,6 +333,11 @@ details > p {
 	color: blue;
 }
 
+.incorrect {
+	color: red;
+	transition: color 0.2s ease;
+}
+
 @media (min-width: 470px) {
 	#rätsel-container {
 		border: solid var(--primary-text-color) 2px;

@@ -120,6 +120,7 @@ const { PUZZLE_ID, SIZE, MIN_WORD_LENGTH, BLACK_FIELDS, NUMBER_FIELDS, CLUES } =
 let schummelzaehler = 0;
 let permissionGranted = false;
 let solved = false;
+let errorTimeout = null;
 
 /* ===================== STATE ===================== */
 
@@ -269,7 +270,7 @@ function toggleDirection() {
 }
 
 function checkAllSolved() {
-	for (const dir of ["WAAGERECHT", "SENKREcht".toUpperCase()]) {
+	for (const dir of ["WAAGERECHT", "SENKRECHT".toUpperCase()]) {
 		for (const number in CLUES[dir]) {
 			const entry = CLUES[dir][number];
 			const solution = entry.s;
@@ -312,6 +313,65 @@ function checkAllSolved() {
 	}
 
 	return true;
+}
+
+function checkErrors() {
+	clearHighlight();
+	for (let r = 0; r < SIZE; r++) {
+		for (let c = 0; c < SIZE; c++) {
+			grid[r][c].el.classList.remove("incorrect");
+		}
+	}
+	for (const dir of ["WAAGERECHT", "SENKRECHT".toUpperCase()]) {
+		for (const number in CLUES[dir]) {
+			const entry = CLUES[dir][number];
+			const solution = entry.s;
+
+			// find start cell
+			let start = null;
+
+			for (let r = 0; r < SIZE; r++) {
+				for (let c = 0; c < SIZE; c++) {
+					const numEl =
+						grid[r][c].el.querySelector(".question-number");
+					if (numEl?.textContent == number) {
+						start = { r, c };
+						break;
+					}
+				}
+				if (start) break;
+			}
+
+			if (!start) continue;
+
+			// compare letters
+			let r = start.r;
+			let c = start.c;
+
+			for (let i = 0; i < solution.length; i++) {
+				const cell = grid[r][c];
+
+				const current = cell.letter || "";
+				const expected = solution[i];
+
+				if (current && current !== expected) {
+					cell.el.classList.add("incorrect");
+				}
+
+				if (dir === "WAAGERECHT") c++;
+				else r++;
+			}
+		}
+	}
+	if (errorTimeout) clearTimeout(errorTimeout);
+
+	errorTimeout = setTimeout(() => {
+		for (let r = 0; r < SIZE; r++) {
+			for (let c = 0; c < SIZE; c++) {
+				grid[r][c].el.classList.remove("incorrect");
+			}
+		}
+	}, 2000);
 }
 
 function getRandomColor() {
@@ -430,7 +490,7 @@ function moveNext() {
 		clearHighlight();
 		state.current = { row: null, col: null };
 		display.textContent = "Wähle das nächste Feld aus";
-		display.style.color = "var(--primary-bg-color)";
+		display.style.color = "var(--between-dark-light)";
 	}
 }
 
@@ -617,7 +677,7 @@ function closeInfo() {
 	clearHighlight();
 	state.current = { row: null, col: null };
 	display.textContent = "Wähle das nächste Feld aus";
-	display.style.color = "var(--primary-bg-color)";
+	display.style.color = "var(--between-dark-light)";
 	info.classList.add("hidden");
 	info.classList.remove("flex");
 	body.classList.remove("dark");
@@ -711,8 +771,6 @@ infoButtons.forEach((btn) => {
 	btn.addEventListener("click", closeInfo);
 });
 
-// toggleBtn.addEventListener("click", checkSolution);
-
 document.addEventListener("keydown", (e) => {
 	const { row, col } = state.current;
 	if (isBlack(row, col)) {
@@ -724,6 +782,45 @@ document.addEventListener("keydown", (e) => {
 		writeCell(e.key.toUpperCase());
 	} else if (e.key === "Backspace") {
 		handleBackspace();
+	}
+});
+
+//=========== check solution eventlinstener ===========
+let pressTimer = null;
+let pressStart = 0;
+
+checkButton.addEventListener("touchstart", () => {
+	pressStart = Date.now();
+
+	pressTimer = setTimeout(() => {
+		checkErrors();
+		schummelzaehler++;
+		pressTimer = null;
+	}, 3500);
+});
+
+checkButton.addEventListener("touchend", () => {
+	const pressDuration = Date.now() - pressStart;
+
+	if (pressTimer) {
+		clearTimeout(pressTimer);
+		pressTimer = null;
+
+		if (pressDuration < 3500) {
+			display.style.color = "red";
+			display.textContent =
+				"Länger gedrückt halten um deine \nAntworten zu überprüfen. \nVorsicht: Zählt als Schummeln!";
+			setTimeout(() => {
+				if (!state.current.row) {
+					display.textContent =
+						"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
+					display.style.color = "var(--between-dark-light)";
+				} else {
+					display.style.color = "var(--primary-text-color)";
+					showClue();
+				}
+			}, 3500);
+		}
 	}
 });
 
@@ -796,7 +893,7 @@ function setMotionListeners() {
 
 			fillRandomField();
 			btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
-			display.style.color = "blue";
+			display.style.color = "var(--primary-highlight-color)";
 			display.textContent = "Schummeln aktiviert!";
 			setTimeout(() => {
 				if (!solved && state.current.row !== null) {
