@@ -161,11 +161,17 @@ details {
 	flex-wrap: wrap;
 	/* gap: 1.5vw; */
 	& > button {
+		-webkit-user-select: none; /* Safari */
+		-ms-user-select: none; /* old Edge/IE */
+		user-select: none; /* modern browsers */
 		width: calc(84dvw / 11);
 		height: 7dvh;
 		font-size: min(1.6rem, calc(94dvw / 16));
 	}
 	& > button.backspace-button {
+		webkit-user-select: none; /* Safari */
+		-ms-user-select: none; /* old Edge/IE */
+		user-select: none; /* modern browsers */
 		width: calc((84dvw / 11) * 2 + 2dvw);
 	}
 }
