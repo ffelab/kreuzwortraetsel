@@ -98,7 +98,6 @@ body.dark {
 	webkit-user-select: none; /* Safari */
 	-ms-user-select: none; /* old Edge/IE */
 	user-select: none; /* modern browsers */
-	transition: all 0.4s ease;
 }
 
 .box.black {
