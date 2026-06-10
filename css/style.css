@@ -95,6 +95,9 @@ body.dark {
 	cursor: pointer;
 	background: var(--primary-bg-color);
 	font-family: "JetBrainsMono";
+	webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* old Edge/IE */
+	user-select: none; /* modern browsers */
 }
 
 .box.black {
@@ -200,7 +203,9 @@ details {
 	font-size: min(1rem, calc(96vw / 37));
 	font-weight: 900;
 	pointer-events: none;
-	user-select: none;
+	webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* old Edge/IE */
+	user-select: none; /* modern browsers */
 }
 
 #hinweis-container {
