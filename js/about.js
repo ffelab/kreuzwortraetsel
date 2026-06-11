@@ -1,5 +1,5 @@
 function loadPuzzleFromStorage(index) {
-	const key = `kwr${String(index).padStart(2, "0")}`;
+	const key = `finished${String(index).padStart(2, "0")}`;
 	const raw = localStorage.getItem(key);
 
 	if (!raw) return [];
