@@ -57,7 +57,11 @@ const puzzleData = {
 
 	CLUES: {
 		WAAGERECHT: {
-			1: { c: "", l: "6", s: "ZUFALL" },
+			1: {
+				c: "Spontaner Zusammenbruch: Der ... brachten ihn ...",
+				l: "6",
+				s: "ZUFALL",
+			},
 			5: { c: "", l: "2", s: "ER" },
 			6: { c: "", l: "2", s: "EI" },
 			7: { c: "", l: "3", s: "WII" },

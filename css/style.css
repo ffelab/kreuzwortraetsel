@@ -22,6 +22,8 @@
 	--between-dark-light: rgb(183, 183, 183);
 
 	--primary-highlight-color: #676cfd;
+	--darker-highlight-color: #252cff;
+	--primary-warning-color: #ff2529;
 	--secondary-highlight-color: #c6cdff;
 	/* --primary-highlight-color: #ff4c31;
 	--secondary-highlight-color: #ffe1dc; */
@@ -68,7 +70,7 @@ body.dark {
 	padding: 0 2dvw;
 }
 
-#rätsel-container {
+#raetsel-container {
 	border: solid var(--primary-text-color) 1.8px;
 	border-radius: 2px;
 	margin-top: 1dvh;
@@ -260,12 +262,11 @@ details {
 
 #info {
 	flex-direction: column;
-
 	gap: 0.5rem;
 	align-items: center;
 	text-align: center;
 	justify-content: flex-end;
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgba(0, 0, 0, 0.8);
 	color: var(--primary-text-color);
 	font-size: 1rem;
 	padding: 1.5rem;
@@ -279,7 +280,8 @@ details {
 	details {
 		font-size: 1rem;
 
-		width: 86vw;
+		width: 93.5vw;
+		max-width: 600px;
 		padding: 3vw 3vw;
 		& > p {
 			margin: 2vw 0;
@@ -341,19 +343,19 @@ details > p {
 }
 
 .cheated {
-	color: blue;
+	color: var(--darker-highlight-color);
 }
 
 .incorrect {
-	color: red;
+	color: var(--primary-warning-color);
 }
 
 .correct {
-	color: blue;
+	color: var(--darker-highlight-color);
 }
 
 @media (min-width: 470px) {
-	#rätsel-container {
+	#raetsel-container {
 		border: solid var(--primary-text-color) 2px;
 		margin-top: 3vw;
 	}

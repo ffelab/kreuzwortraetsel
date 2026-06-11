@@ -132,7 +132,7 @@ const state = {
 
 /* ===================== DOM REFERENCES ===================== */
 
-const containerEl = document.getElementById("rätsel-container");
+const containerEl = document.getElementById("raetsel-container");
 const toggleBtn = document.getElementById("Switch");
 const display = document.getElementById("hinweis");
 const letterBtns = document.querySelectorAll(".letter-button");
@@ -317,18 +317,12 @@ function checkAllSolved() {
 
 function checkErrors() {
 	clearHighlight();
-	for (let r = 0; r < SIZE; r++) {
-		for (let c = 0; c < SIZE; c++) {
-			grid[r][c].el.classList.remove("incorrect");
-			grid[r][c].el.classList.remove("correct");
-		}
-	}
+
 	for (const dir of ["WAAGERECHT", "SENKRECHT".toUpperCase()]) {
 		for (const number in CLUES[dir]) {
 			const entry = CLUES[dir][number];
 			const solution = entry.s;
 
-			// find start cell
 			let start = null;
 
 			for (let r = 0; r < SIZE; r++) {
@@ -345,7 +339,6 @@ function checkErrors() {
 
 			if (!start) continue;
 
-			// compare letters
 			let r = start.r;
 			let c = start.c;
 
@@ -367,25 +360,12 @@ function checkErrors() {
 			}
 		}
 	}
-
-	if (errorTimeout) clearTimeout(errorTimeout);
-
-	errorTimeout = setTimeout(() => {
-		for (let r = 0; r < SIZE; r++) {
-			for (let c = 0; c < SIZE; c++) {
-				setTimeout(() => {
-					grid[r][c].el.classList.remove("incorrect");
-					grid[r][c].el.classList.remove("correct");
-				}, 300);
-			}
-		}
-	}, 1500);
 }
 
 function getRandomColor() {
 	const colors = [
-		"#ff4d4d", // red
-		"#4dd2ff", // blue
+		"var(--primary-warning-color)", // red
+		"var(--primary-highlight-color)", // blue
 		"#4dff88", // green
 		"#ffd24d", // yellow
 		"#b84dff", // purple
@@ -778,6 +758,19 @@ const infoButtons = info.querySelectorAll(".close-button");
 infoButtons.forEach((btn) => {
 	btn.addEventListener("click", closeInfo);
 });
+const reset = info.querySelector(".reset-button");
+reset.addEventListener("click", () => {
+	for (let r = 0; r < SIZE; r++) {
+		for (let c = 0; c < SIZE; c++) {
+			const cell = grid[r][c];
+
+			cell.letter = "";
+			cell.letterEl.textContent = "";
+
+			cell.el.classList.remove("cheated");
+		}
+	}
+});
 
 document.addEventListener("keydown", (e) => {
 	const { row, col } = state.current;
@@ -794,46 +787,82 @@ document.addEventListener("keydown", (e) => {
 });
 
 //=========== check solution eventlinstener ===========
-let pressTimer = null;
-let pressStart = 0;
+let checkHoldTimer = null;
+let checkActive = false;
+let checkPreviewState = null;
 
-checkButton.addEventListener("touchstart", () => {
-	pressStart = Date.now();
+function snapshotGridState() {
+	return grid.map((row) =>
+		row.map((cell) => ({
+			correct: cell.el.classList.contains("correct"),
+			incorrect: cell.el.classList.contains("incorrect"),
+		})),
+	);
+}
 
-	pressTimer = setTimeout(() => {
+function restoreGridState(snapshot) {
+	if (!snapshot) return;
+
+	for (let r = 0; r < SIZE; r++) {
+		for (let c = 0; c < SIZE; c++) {
+			const cell = grid[r][c].el;
+			cell.classList.toggle("correct", snapshot[r][c].correct);
+			cell.classList.toggle("incorrect", snapshot[r][c].incorrect);
+		}
+	}
+}
+
+checkButton.addEventListener("pointerdown", () => {
+	checkPreviewState = snapshotGridState();
+
+	checkHoldTimer = setTimeout(() => {
+		checkActive = true;
 		checkErrors();
 
-		display.textContent =
-			"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
-		display.style.color = "var(--between-dark-light)";
-
 		schummelzaehler++;
-		pressTimer = null;
 	}, 1000);
 });
 
-checkButton.addEventListener("touchend", () => {
-	const pressDuration = Date.now() - pressStart;
+checkButton.addEventListener("pointerup", () => {
+	clearTimeout(checkHoldTimer);
+	let { row, col } = state.current;
+	display.textContent =
+		"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
+	display.style.color = "var(--between-dark-light)";
 
-	if (pressTimer) {
-		clearTimeout(pressTimer);
-		pressTimer = null;
+	if (!checkActive) {
+		display.textContent =
+			"Knopf länger gedrückt halten um Antworten zu prüfen. Vorsicht: zählt als Schummeln!";
+		display.style.color = "var(--primary-warning-color)";
 
-		if (pressDuration < 1000) {
-			display.style.color = "red";
-			display.textContent =
-				"Länger gedrückt halten um deine \nAntworten zu überprüfen. \nVorsicht: Zählt als Schummeln!";
-			setTimeout(() => {
-				if (!state.current.row) {
-					display.textContent =
-						"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
-					display.style.color = "var(--between-dark-light)";
-				} else {
-					display.style.color = "var(--primary-text-color)";
-					showClue();
-				}
-			}, 3500);
-		}
+		// setTimeout(() => {
+		// 	if (state.current.row !== null) {
+		// 		showClue();
+		// 		display.style.color = "var(--primary-text-color)";
+		// 	} else {
+		// 		display.textContent =
+		// 			"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
+		// 		display.style.color = "var(--between-dark-light)";
+		// 	}
+		// }, 3500);
+
+		return;
+	}
+
+	checkActive = false;
+	restoreGridState(checkPreviewState);
+
+	display.textContent =
+		"Click auf ein Feld für den Rätselhinweis. Click nochmal\num die Richtung zu ändern";
+	display.style.color = "var(--between-dark-light)";
+	if (state.current.row) setActive(row, col);
+});
+
+checkButton.addEventListener("pointercancel", () => {
+	clearTimeout(checkHoldTimer);
+	if (checkActive) {
+		checkActive = false;
+		restoreGridState(checkPreviewState);
 	}
 });
 
@@ -906,7 +935,7 @@ function setMotionListeners() {
 
 			fillRandomField();
 			btn_reqPermission.textContent = `Schummelzähler: ${schummelzaehler}`;
-			display.style.color = "var(--primary-highlight-color)";
+			display.style.color = "var(--darker-highlight-color)";
 			display.textContent = "Schummeln aktiviert!";
 			setTimeout(() => {
 				if (!solved && state.current.row !== null) {
